@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 
@@ -9,6 +10,9 @@ class Principal(models.Model):
     email = models.EmailField()
     test_mode = models.BooleanField(default=True)
     language = models.TextField(default="en")
+
+    def get_absolute_url(self):
+        return reverse('principal.detail.view', args=[str(self.id)])
 
 
 class weebly_site(models.Model):

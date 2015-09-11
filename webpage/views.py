@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import View, TemplateView, FormView
+from django.views.generic import CreateView, DetailView, TemplateView
 
 from .forms import *
 
@@ -9,7 +9,18 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 
 
-class SignUpView(FormView):
-    template_name = 'signup.html'
-    form_class = SignUpForm
-    success_url = '/'
+class SignUpView(CreateView):
+    model = Principal
+    fields = ['email']
+    
+    def form_valid(self, form):
+        user_id
+        test_mode = True
+        language = 'en'
+
+        return super(SignUpView, self).form_valid()
+
+
+
+class PrincipalDetailView(DetailView):
+    model = Principal
