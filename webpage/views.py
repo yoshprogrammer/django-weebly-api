@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, TemplateView
 
+from .utils import *
 from .forms import *
 
 
@@ -14,11 +15,23 @@ class SignUpView(CreateView):
     fields = ['email']
     
     def form_valid(self, form):
-        user_id
-        test_mode = True
-        language = 'en'
+        # get data
+        my_data = {
+            'email': form.data['email'],
+            'test_mode': True,
+            'language': 'en',
+            }
 
-        return super(SignUpView, self).form_valid()
+        # send off to weebly for user_id
+        resp = weebly_api('POST', my_data, 'user/')
+
+        if (resp.status == 200)
+            form.instance.user_id = resp.json['user']['user_id']
+            form.instance.test_mode = resp.json['user']['test_mode']
+            form.instance.language = resp.json['user']['language']
+            return super(SignUpView, self).form_valid(form)
+        else:
+            # fail
 
 
 
