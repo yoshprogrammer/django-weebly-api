@@ -1,0 +1,12 @@
+    <div id="edit-page">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form id="signup" enctype="multipart/form-data" action="" method="POST" role="form">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                    <a href="" class="btn btn-default" > Cancel </a>
+                </form>
+            </div>
+        </div>
+    </div>
