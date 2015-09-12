@@ -25,14 +25,15 @@ class SignUpView(CreateView):
         # send off to weebly for user_id
         resp = weebly_api('POST', my_data, 'user/')
 
-        if (resp.status == 200)
-            form.instance.user_id = resp.json['user']['user_id']
-            form.instance.test_mode = resp.json['user']['test_mode']
-            form.instance.language = resp.json['user']['language']
+        if (resp.status_code == 200):
+            form.instance.user_id = resp.json()['user']['user_id']
+            form.instance.test_mode = resp.json()['user']['test_mode']
+            form.instance.language = resp.json()['user']['language']
             return super(SignUpView, self).form_valid(form)
         else:
             # fail
-
+            #redirect w message
+            pass
 
 
 class PrincipalDetailView(DetailView):
