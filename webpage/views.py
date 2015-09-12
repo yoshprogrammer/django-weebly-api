@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, TemplateView
 
 from .utils import *
@@ -13,7 +13,7 @@ class IndexView(TemplateView):
 class SignUpView(CreateView):
     model = Principal
     fields = ['email']
-    
+
     def form_valid(self, form):
         # get data
         my_data = {
@@ -31,9 +31,9 @@ class SignUpView(CreateView):
             form.instance.language = resp.json()['user']['language']
             return super(SignUpView, self).form_valid(form)
         else:
-            # fail
-            #redirect w message
-            pass
+            # fail. redirect with message
+            #TODO: form.errors = resp.json()['error']['message']
+            return redirect('signup')
 
 
 class PrincipalDetailView(DetailView):
