@@ -1,0 +1,8 @@
+<h1>Principals</h1>
+<ul>
+{% for article in object_list %}
+    <li><a href={%  url 'principal.detail.view' article.id %}>{{ article.user_id }}</a> : {{ article.email }}</li>
+{% empty %}
+    <li>No principals yet.</li>
+{% endfor %}
+</ul>

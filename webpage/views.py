@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from django.views.generic import CreateView, DetailView, TemplateView
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from .utils import *
 from .forms import *
@@ -37,4 +37,8 @@ class SignUpView(CreateView):
 
 
 class PrincipalDetailView(DetailView):
+    model = Principal
+
+
+class PrincipalListView(ListView):
     model = Principal
