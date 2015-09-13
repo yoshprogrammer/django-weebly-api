@@ -65,7 +65,7 @@ if 0:
 
     resp = weebly_post(my_url, my_data)
 
-if 1:
+if 0:
     # test to fetch user info
     my_url = 'user/60598425'
 
@@ -77,7 +77,7 @@ if 0:
 
     resp = weebly_get(my_url)
 
-if 1:
+if 0:
     # print results
     print(resp.status_code)
     print(resp.text)
