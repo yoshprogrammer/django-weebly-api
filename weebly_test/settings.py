@@ -106,8 +106,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-API_KEY = '0513rf6d0om4y1vmbm2gazxqrcwaye38'
-API_SECRET = '8mzamuu3vpk9laud7a9e5uw0yobaywxozkhpdtgh6iscd15puk11jkwb8h714duy'
+WEEBLY_API_KEY = '0513rf6d0om4y1vmbm2gazxqrcwaye38'
+WEEBLY_API_SECRET = '8mzamuu3vpk9laud7a9e5uw0yobaywxozkhpdtgh6iscd15puk11jkwb8h714duy'
+WEEBLY_TEST_ACCOUNT_ID = '60691945'
 
 TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
 
