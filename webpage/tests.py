@@ -10,11 +10,10 @@ class WeeblyApiTests(TestCase):
 
     def setUp(self):
         #self.email = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6)) + '@test.com'
-        self.email   = 'test231@yahoo.com'
-        self.user_id = '60521671'
-        self.site_id = '685054111468103842'
-        self.domain  = None
-
+        self.email   = 'test23@yahoo.com'
+        self.user_id = '60525257'
+        self.site_id = ''
+        self.domain = ''
 
     def test_new_user_account_creation(self):
         my_url = 'user/'
@@ -26,7 +25,7 @@ class WeeblyApiTests(TestCase):
 
     def test_user_site_creation(self):
         my_url = 'user/' + self.user_id + '/site'
-        self.domain = self.user_id + '.com'
+        self.domain = 'www.' + self.user_id + '.com'
         my_data = {'domain': self.domain}
         resp = weebly_post(my_url, my_data)
 
@@ -91,7 +90,7 @@ class WeeblyApiTests(TestCase):
         my_url = 'user/' + self.user_id + '/site/' + self.site_id + '/restore'
         my_data = "{'domain': '" + self.domain + "'}"
 
-        resp = weebly_post(my_rul, my_data)
+        resp = weebly_post(my_url, my_data)
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.json()['success'], 'True')
 
