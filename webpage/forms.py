@@ -9,3 +9,11 @@ class SignUpForm(forms.ModelForm):
         fields = [
             'email',
         ]
+
+
+class PrincipalAddForm(forms.ModelForm):
+    class Meta:
+        model = Principal
+        fields = [
+            'id',
+        ]

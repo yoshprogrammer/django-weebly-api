@@ -1,12 +1,19 @@
-    <div id="edit-page">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <form id="signup" enctype="multipart/form-data" action="" method="POST" role="form">
-                    {% csrf_token %}
-                    {{ form }}
-                    <input type="submit" class="btn btn-primary" value="Save" />
-                    <a href="" class="btn btn-default" > Cancel </a>
-                </form>
-            </div>
+{% extends 'webpage/base.html' %}
+{% load bootstrap3 %}
+
+{% block main_content_area %}
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <form action="" method="POST" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary" value="Save" />Submit</button>
+                <a href="" class="btn btn-default" > Cancel </a>
+                {% endbuttons %}
+            </form>
         </div>
     </div>
+
+{% endblock %}

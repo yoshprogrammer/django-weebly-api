@@ -1,15 +1,16 @@
 from django.shortcuts import redirect
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 
-from .utils import *
+from weebly import WeeblyClient
+
 from .forms import *
 
 
-# Create your views here.
-class IndexView(TemplateView):
-    template_name = 'index.html'
+wclient = WeeblyClient(api_key=settings.WEEBLY_API_KEY, api_secret=settings.WEEBLY_API_SECRET )
 
+# Create your views here.
 
 class SignUpView(CreateView):
     model = Principal
@@ -24,7 +25,7 @@ class SignUpView(CreateView):
             }
 
         # send off to weebly for user_id
-        resp = weebly_api('POST', 'user/', my_data)
+        resp = wclient.post('user/', my_data)
 
         if (resp.status_code == 200):
             form.instance.user_id = resp.json()['user']['user_id']
@@ -37,6 +38,13 @@ class SignUpView(CreateView):
             return redirect('signup')
 
 
+class PrincipalAddView(CreateView):
+    model = Principal
+    fields = ['id']
+    success_url = 'principal.list.view'
+
+
+
 class PrincipalDetailView(DetailView):
     model = Principal
 
@@ -45,13 +53,15 @@ class PrincipalDetailView(DetailView):
 
         #fetch sites from weebly
         principal = get_object_or_404(Principal, pk=self.kwargs['pk'])
-        user_id = principal.user_id
-        my_url = 'user/' + str(user_id) + '/site'
-        resp = weebly_api('GET', 'my_url')
+        my_url = 'user/' + str(principal.id) + '/site'
+        resp = wclient.get(my_url)
 
         if (resp.status_code == 200):
-
-
+            sites = resp.json()['sites']
+            if sites == None:
+                context['sites'] = []
+            else:
+                context['sites'] = [x['site_id'] for x in sites]
         else:
             #TODO need error message
             return redirect('principal.list.view')

@@ -1,8 +1,21 @@
+{% extends 'webpage/base.html' %}
+{% load bootstrap3 %}
+
+{% block main_content_area %}
+
     <div id="edit-page">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <p>User id: {{ object.user_id }}</p>
+                <p>User id: {{ object.id }}</p>
                 <p>Email  : {{ object.email }}</p>
+            </div>
+            <div class="col-md-8 col-md-offset-2">
+                {% for site in sites %}
+                    <a href="">{{ site }}</a><br>
+                {% endfor %}
+                <a href="">Add Site</a>
             </div>
         </div>
     </div>
+
+{% endblock %}

@@ -37,7 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap3',
     'requests',
+    'weebly',
     'webpage',
 )
 
@@ -52,13 +54,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'weebly_test.urls'
+ROOT_URLCONF = 'weebly_api.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),
-                 os.path.join(BASE_DIR, 'webpage', 'templates'),]
+        'DIRS': [os.path.join(BASE_DIR, '../templates'),
+                 os.path.join(BASE_DIR, '../webpage', 'templates'),]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -73,7 +75,7 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'weebly_test.wsgi.application'
+WSGI_APPLICATION = 'weebly_api.wsgi.application'
 
 
 # Database
@@ -82,7 +84,7 @@ WSGI_APPLICATION = 'weebly_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '../../db.sqlite3'),
     }
 }
 
@@ -105,10 +107,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-
-WEEBLY_API_KEY = '0513rf6d0om4y1vmbm2gazxqrcwaye38'
-WEEBLY_API_SECRET = '8mzamuu3vpk9laud7a9e5uw0yobaywxozkhpdtgh6iscd15puk11jkwb8h714duy'
-WEEBLY_TEST_ACCOUNT_ID = '60691945'
 
 TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
 
