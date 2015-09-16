@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-8 col-md-offset-2">
                 {% for site in sites %}
-                    <a href="">{{ site }}</a><br>
+                    <a href="{% url 'site.detail.view' object.id site %}">{{ site }}</a><br>
                 {% endfor %}
                 <a href="">Add Site</a>
             </div>

@@ -7,8 +7,8 @@ from weebly import WeeblyClient
 
 from .forms import *
 
-
 wclient = WeeblyClient(api_key=settings.WEEBLY_API_KEY, api_secret=settings.WEEBLY_API_SECRET )
+
 
 # Create your views here.
 
@@ -72,3 +72,23 @@ class PrincipalDetailView(DetailView):
 
 class PrincipalListView(ListView):
     model = Principal
+
+
+class SiteDetailView(TemplateView):
+    template_name = 'webpage/site_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteDetailView, self).get_context_data(**kwargs)
+
+        user_id = self.kwargs['user_id']
+        site_id = self.kwargs['site_id']
+        my_url = 'user/' + str(user_id) + '/site/' + str(site_id)
+
+        resp = wclient.get(my_url)
+
+        if (resp.status_code == 200):
+            context['site_data'] = resp.json()['site']
+        else:
+            return redirect('pricipal.detail.view', kwargs={'user_id':user_id})
+
+        return context
