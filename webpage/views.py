@@ -92,3 +92,23 @@ class SiteDetailView(TemplateView):
             return redirect('pricipal.detail.view', kwargs={'user_id':user_id})
 
         return context
+
+
+class SiteLoginLinkView(TemplateView):
+    template_name = 'webpage/site_loginlink.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteLoginLinkView, self).get_context_data(**kwargs)
+
+        user_id = self.kwargs['user_id']
+        site_id = self.kwargs['site_id']
+        my_url = 'user/' + str(user_id) + '/site/' + str(site_id) + '/loginLink'
+
+        resp = wclient.get(my_url)
+
+        if (resp.status_code == 200):
+            context['loginLink'] = resp.json()['link']
+        else:
+            return redirect('principal.detail.view', kwargs={'user_id':user_id})
+
+        return context

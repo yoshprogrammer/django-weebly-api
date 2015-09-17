@@ -6,10 +6,11 @@
     <div id="edit-page">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                Site
+                <h2>Site</h2>
                 {% for key, value in site_data.iteritems %}
                     <p>{{ key }} = {{ value }}</p>
                 {% endfor %}
+                <a href="{% url 'site.login.link' user_id site_id %}">Create login link</a>
             </div>
         </div>
     </div>
