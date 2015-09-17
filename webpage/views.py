@@ -1,10 +1,11 @@
-from django.shortcuts import redirect
-from django.views.generic import CreateView, DetailView, ListView, TemplateView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, HttpResponseRedirect
+from django.views.generic import CreateView, DetailView, FormView, ListView, TemplateView
+from django.core.urlresolvers import reverse
 from django.conf import settings
 
 from weebly import WeeblyClient
 
+from .utils import *
 from .forms import *
 
 wclient = WeeblyClient(api_key=settings.WEEBLY_API_KEY, api_secret=settings.WEEBLY_API_SECRET )
@@ -38,11 +39,14 @@ class SignUpView(CreateView):
             return redirect('signup')
 
 
+class PrincipalListView(ListView):
+    model = Principal
+
+
 class PrincipalAddView(CreateView):
     model = Principal
     fields = ['id']
-    success_url = 'principal.list.view'
-
+    success_url = 'principal.list'
 
 
 class PrincipalDetailView(DetailView):
@@ -64,14 +68,33 @@ class PrincipalDetailView(DetailView):
                 context['sites'] = [x['site_id'] for x in sites]
         else:
             #TODO need error message
-            return redirect('principal.list.view')
+            return HttpResponseRedirect(reverse('principal.list'))
 
         return context
 
 
+class SiteAddView(FormView):
+    template_name = 'webpage/site_add.html'
+    form_class = SiteAddForm
 
-class PrincipalListView(ListView):
-    model = Principal
+    def form_valid(self, form):
+        user_id = self.kwargs['user_id']
+        domain = form.cleaned_data #leave it as json
+
+        # first check if valid hostname
+        if is_valid_hostname(domain['domain']):
+            my_url = 'user/' + self.kwargs['user_id'] + '/site'
+            my_data = domain
+            resp = wclient.post(my_url, my_data)
+            if resp.status_code != 200:
+                # error msg
+                return HttpResponseRedirect('principal.detail', kwargs={'pk':user_id})
+
+        return super(SiteAddView,self).form_valid(form)
+
+    def get_success_url(self):
+        user_id = self.kwargs['user_id']
+        return reverse('principal.detail', kwargs={'pk':user_id})
 
 
 class SiteDetailView(TemplateView):
@@ -89,7 +112,7 @@ class SiteDetailView(TemplateView):
         if (resp.status_code == 200):
             context['site_data'] = resp.json()['site']
         else:
-            return redirect('pricipal.detail.view', kwargs={'user_id':user_id})
+            return HttpResponseRedirect(reverse('principal.detail', kwargs={'pk':user_id}))
 
         return context
 
@@ -109,6 +132,6 @@ class SiteLoginLinkView(TemplateView):
         if (resp.status_code == 200):
             context['loginLink'] = resp.json()['link']
         else:
-            return redirect('principal.detail.view', kwargs={'user_id':user_id})
+            return HttpResponseRedirect(reverse('principal.detail', kwargs={'pk':user_id}))
 
         return context

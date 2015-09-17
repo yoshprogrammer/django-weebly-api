@@ -6,9 +6,9 @@
 <h1>Principals</h1>
 <ul>
 {% for article in object_list %}
-    <li><a href={%  url 'principal.detail.view' article.id %}>{{ article.id }}</a> : {{ article.email }}</li>
+    <li><a href={%  url 'principal.detail' article.id %}>{{ article.id }}</a> : {{ article.email }}</li>
 {% empty %}
-    <li>No principals yet. <a href="{% url 'principal.add.view' %}">Add One</a></li>
+    <li>No principals yet. <a href="{% url 'principal.add' %}">Add One</a></li>
 {% endfor %}
 </ul>
 

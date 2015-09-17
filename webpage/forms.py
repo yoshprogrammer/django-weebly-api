@@ -17,3 +17,7 @@ class PrincipalAddForm(forms.ModelForm):
         fields = [
             'id',
         ]
+
+
+class SiteAddForm(forms.Form):
+    domain = forms.CharField(label='Domain name', max_length=255)
