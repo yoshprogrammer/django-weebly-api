@@ -6,12 +6,12 @@
     <div id="edit-page">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h1>Principals</h1>
+                <h1>Weebly Users</h1>
                 <ul>
                 {% for article in object_list %}
-                    <li><a href={%  url 'principal.detail' article.id %}>{{ article.id }}</a> : {{ article.email }}</li>
+                    <li><a href={%  url 'user.detail' article.id %}>{{ article.id }}</a> : {{ article.email }}</li>
                 {% empty %}
-                    <li>No principals yet. <a href="{% url 'principal.add' %}">Add One</a></li>
+                    <li>No users yet. <a href="{% url 'user.add' %}">Add One</a></li>
                 {% endfor %}
                 </ul>
             </div>

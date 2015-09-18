@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Principal
+from .models import *
 
 
 class SignUpForm(forms.ModelForm):
     class Meta:
-        model = Principal
+        model = WeeblyUser
         fields = [
             'email',
         ]
@@ -13,7 +13,7 @@ class SignUpForm(forms.ModelForm):
 
 class PrincipalAddForm(forms.ModelForm):
     class Meta:
-        model = Principal
+        model = WeeblyUser
         fields = [
             'id',
         ]
